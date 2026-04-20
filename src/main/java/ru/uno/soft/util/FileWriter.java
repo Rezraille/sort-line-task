@@ -11,10 +11,10 @@ import java.util.Set;
 public class FileWriter {
 
   public static void writeToFile(String pack, String name,
-                                 List<Set<String>> allLines){
+                                 List<Set<String>> allLines) {
     Path path = Path.of(pack, name);
     try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-      String groupLine = "Line ";
+      String groupLine = "Группа ";
       int countGroup = 0;
 
       for (Set<String> lines : allLines) {

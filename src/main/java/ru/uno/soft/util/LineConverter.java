@@ -2,14 +2,15 @@ package ru.uno.soft.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class LineConverter {
 
-  private static final String ELEMENT_REGEX = "\"([^\"]*)\";?";
-  private static final String LINE_REGEX = "^(\"[^\"]*\";)*(\"[^\"]*\")$";
+  private static final String ELEMENT_REGEX = "\"([^\"]*)\";?|;";
+  private static final String LINE_REGEX = "^(\"[^\"]*\";|;)*(\"[^\"]*\";?|;)$";
 
   public Boolean isCorrectLine(String line) {
     if (line.length() == 0) return false;
@@ -30,8 +31,8 @@ public class LineConverter {
     Matcher matcher = getMatcher(line, ELEMENT_REGEX);
     List<CellData> cellDates = new ArrayList<>();
     while (matcher.find()) {
-      String element = matcher.group(1);
-      cellDates.add(new CellData(element,cellDates.size()));
+      String element = Objects.requireNonNullElse(matcher.group(1), "");
+      cellDates.add(new CellData(element, cellDates.size()));
     }
     return cellDates;
   }
